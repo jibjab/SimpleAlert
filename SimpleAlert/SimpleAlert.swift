@@ -127,10 +127,10 @@ open class AlertController: UIViewController {
         
         view.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         
-        baseView.layer.cornerRadius = 3.0
+        baseView.layer.cornerRadius = 5.0
         baseView.clipsToBounds = true
         
-        cancelButtonView.layer.cornerRadius = 3.0
+        cancelButtonView.layer.cornerRadius = 5.0
         cancelButtonView.clipsToBounds = true
         
         displayTargetView = contentView
@@ -394,6 +394,9 @@ private extension AlertController {
         if preferredStyle != .alert || buttonActions.count != 2 {
             buttonViewHeightConstraint.constant = buttonHeight
         }
+        
+        buttonView.layer.cornerRadius = 5.0
+        buttonView.layer.masksToBounds = true
     }
     
     func takeOverColor(_ targetView: UIView?) {
