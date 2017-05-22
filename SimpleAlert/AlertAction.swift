@@ -13,19 +13,21 @@ open class AlertAction {
         case cancel
         case destructive
     }
-    
-    public init(title: String, style: Style, handler: ((AlertAction?) -> Void)? = nil) {
+
+    public init(title: String, image: UIImage? = nil, style: Style = .default, handler: ((AlertAction?) -> Void)? = nil) {
         self.title = title
+        self.image = image
         self.handler = handler
         self.style = style
     }
-    
+
     public convenience init(title: String, style: Style, dismissesAlert: Bool, handler: ((AlertAction?) -> Void)? = nil) {
         self.init(title: title, style: style, handler: handler)
         self.dismissesAlert = dismissesAlert
     }
-    
+
     var title: String
+    var image: UIImage?
     var handler: ((AlertAction) -> Void)?
     var style: Style
     var dismissesAlert = true
@@ -35,10 +37,11 @@ open class AlertAction {
         }
     }
     open fileprivate(set) var button: UIButton!
-    
+
     func setButton(_ forButton: UIButton) {
         button = forButton
         button.setTitle(title, for: UIControlState())
+        button.setImage(image, for: UIControlState())
         button.isEnabled = enabled
     }
 }
