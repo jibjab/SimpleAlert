@@ -66,7 +66,13 @@ open class AlertController: UIViewController {
     let ActionSheetButtonHeight: CGFloat = 44
     let ActionSheetButtonFontSize: CGFloat = 21
     let ConstraintPriorityRequired: Float = 1000
-    
+
+    open var ActionSheetInsets: UIEdgeInsets = UIEdgeInsetsMake(8, 8, 8, 8) {
+        didSet {
+            view.setNeedsLayout()
+        }
+    }
+
     fileprivate var message: String?
     fileprivate var preferredStyle: Style = .alert
     
@@ -337,7 +343,7 @@ private extension AlertController {
     func layoutContainer() {
         var containerWidth = AlertDefaultWidth
         if preferredStyle == .actionSheet {
-            marginInsets = UIEdgeInsetsMake(ActionSheetMargin, ActionSheetMargin, ActionSheetMargin, ActionSheetMargin)
+            marginInsets = ActionSheetInsets
             marginView.layoutIfNeeded()
             containerWidth = min(view.bounds.width, view.bounds.height) - marginInsets.top - marginInsets.bottom
         }
