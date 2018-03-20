@@ -397,9 +397,7 @@ private extension AlertController {
         }
         
         let buttonHeight = addButton(buttonView, actions: buttonActions)
-        if preferredStyle != .alert || buttonActions.count != 2 {
-            buttonViewHeightConstraint.constant = buttonHeight
-        }
+        buttonViewHeightConstraint.constant = buttonHeight
         
         buttonView.layer.cornerRadius = 5.0
         buttonView.layer.masksToBounds = true
@@ -415,11 +413,8 @@ private extension AlertController {
     }
     
     func addButton(_ view: UIView, actions: [AlertAction]) -> CGFloat {
-        var sizeToFit: ((_ button: UIButton, _ index: Int) -> Void) = buttonSizeToFitForVertical
-        if preferredStyle == .alert && actions.count == 2 {
-            sizeToFit = buttonSizeToFitForHorizontal
-        }
-        
+        let sizeToFit: ((_ button: UIButton, _ index: Int) -> Void) = buttonSizeToFitForVertical
+
         return actions.reduce(0) { height, action in
             let button = action.button
             view.addSubview(button!)
@@ -436,18 +431,6 @@ private extension AlertController {
     func buttonSizeToFitForVertical(_ button: UIButton, index: Int) {
         button.frame.size.width = containerViewWidthConstraint.constant
         button.frame.origin.y = button.bounds.height * CGFloat(index)
-    }
-    
-    func buttonSizeToFitForHorizontal(_ button: UIButton, index: Int) {
-        button.frame.size.width = containerViewWidthConstraint.constant / 2
-        button.frame.origin.x = button.bounds.width * CGFloat(index)
-        
-        if index != 0 {
-            let borderView = UIView(frame: CGRect(x: 0, y: 0, width: 0.5, height: button.bounds.height))
-            borderView.backgroundColor = UIColor.lightGray
-            borderView.autoresizingMask = .flexibleHeight
-            button.addSubview(borderView)
-        }
     }
     
     func configurAlertButton(_ style :AlertAction.Style, forButton button: UIButton) {
